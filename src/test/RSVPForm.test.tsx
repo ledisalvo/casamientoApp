@@ -1,7 +1,8 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { RSVPForm } from '@/components/invite/RSVPForm'
+import type { RSVPResponse } from '@/types'
 
 // Mock submitRSVP to avoid hitting Supabase
 vi.mock('@/lib/queries', () => ({
@@ -11,7 +12,7 @@ vi.mock('@/lib/queries', () => ({
 const GUEST = { id: 'guest-1', name: 'Familia García', max_seats: 3 }
 
 describe('RSVPForm', () => {
-  let onSubmitted: ReturnType<typeof vi.fn>
+  let onSubmitted: Mock<(rsvp: RSVPResponse) => void>
 
   beforeEach(() => {
     onSubmitted = vi.fn()
