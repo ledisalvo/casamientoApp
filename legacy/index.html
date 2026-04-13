@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lucas & Valentina — Nos casamos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-pre">nos casamos</p>
+      <h1 class="hero-names">Lucas <span>&</span> Valentina</h1>
+      <p class="hero-date">15 · XI · 2025</p>
+      <a href="#ceremonia" class="hero-btn">Ver invitación</a>
+    </div>
+    <div class="hero-scroll-hint">&#8964;</div>
+  </section>
+
+  <!-- ===== COUNTDOWN ===== -->
+  <section class="countdown-section">
+    <p class="section-label">faltan</p>
+    <div class="countdown" id="countdown">
+      <div class="countdown-item">
+        <span class="countdown-num" id="days">00</span>
+        <span class="countdown-lbl">días</span>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-item">
+        <span class="countdown-num" id="hours">00</span>
+        <span class="countdown-lbl">horas</span>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-item">
+        <span class="countdown-num" id="minutes">00</span>
+        <span class="countdown-lbl">minutos</span>
+      </div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-item">
+        <span class="countdown-num" id="seconds">00</span>
+        <span class="countdown-lbl">segundos</span>
+      </div>
+    </div>
+    <p class="countdown-sub">para que empiece la fiesta</p>
+  </section>
+
+  <!-- ===== QUOTE ===== -->
+  <section class="quote-section">
+    <blockquote>
+      "Dos almas con un solo pensamiento,<br/>dos corazones que laten como uno."
+    </blockquote>
+    <cite>— John Keats</cite>
+  </section>
+
+  <!-- ===== CEREMONIA ===== -->
+  <section class="event-section" id="ceremonia">
+    <div class="event-card event-card--left">
+      <div class="event-img" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80')"></div>
+      <div class="event-info">
+        <p class="event-tag">Ceremonia</p>
+        <h2 class="event-title">Iglesia San Francisco</h2>
+        <div class="event-details">
+          <p>Sábado 15 de noviembre de 2025</p>
+          <p>18:00 hs</p>
+          <p>Av. Corrientes 1234, CABA</p>
+        </div>
+        <a href="https://maps.google.com" target="_blank" class="btn-outline">Ver mapa</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RECEPCIÓN ===== -->
+  <section class="event-section event-section--alt">
+    <div class="event-card event-card--right">
+      <div class="event-info">
+        <p class="event-tag">Recepción</p>
+        <h2 class="event-title">Salón Los Jardines</h2>
+        <div class="event-details">
+          <p>Sábado 15 de noviembre de 2025</p>
+          <p>20:30 hs</p>
+          <p>Av. del Libertador 5678, CABA</p>
+        </div>
+        <a href="https://maps.google.com" target="_blank" class="btn-outline">Ver mapa</a>
+      </div>
+      <div class="event-img" style="background-image: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&q=80')"></div>
+    </div>
+  </section>
+
+  <!-- ===== DRESSCODE ===== -->
+  <section class="dresscode-section">
+    <div class="dresscode-inner">
+      <p class="section-label">código de vestimenta</p>
+      <h2 class="dresscode-title">Elegante</h2>
+      <p class="dresscode-text">
+        Te pedimos que evites los tonos claros como el blanco, crema e ivory.<br/>
+        ¡Vení a brillar con nosotros!
+      </p>
+      <div class="dresscode-palette">
+        <span class="swatch" style="background:#2c2c2c" title="Negro"></span>
+        <span class="swatch" style="background:#4a3728" title="Marrón oscuro"></span>
+        <span class="swatch" style="background:#7a5c4f" title="Terracota"></span>
+        <span class="swatch" style="background:#3b4a3f" title="Verde bosque"></span>
+        <span class="swatch" style="background:#1c2e4a" title="Azul marino"></span>
+        <span class="swatch" style="background:#6b4c6b" title="Borravino"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== REGALO ===== -->
+  <section class="gift-section">
+    <div class="gift-inner">
+      <div class="gift-icon">&#9825;</div>
+      <p class="section-label">regalos</p>
+      <h2 class="gift-title">Tu presencia es el regalo<br/>más importante</h2>
+      <p class="gift-text">
+        Si querés hacernos un regalo, podés hacerlo a través de una transferencia bancaria.
+      </p>
+      <button class="btn-solid" onclick="toggleGiftInfo()">Ver datos bancarios</button>
+      <div class="gift-info" id="giftInfo">
+        <p><strong>Titular:</strong> Lucas Gómez</p>
+        <p><strong>Banco:</strong> Banco Nación</p>
+        <p><strong>CBU:</strong> 0110123456789012345678</p>
+        <p><strong>Alias:</strong> LUCAS.BODA.2025</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RSVP ===== -->
+  <section class="rsvp-section" id="rsvp">
+    <div class="rsvp-inner">
+      <p class="section-label">confirmá tu asistencia</p>
+      <h2 class="rsvp-title">¿Contamos con vos?</h2>
+      <p class="rsvp-sub">Por favor confirmá antes del <strong>1 de octubre de 2025</strong></p>
+
+      <form class="rsvp-form" onsubmit="submitRSVP(event)">
+        <div class="form-group">
+          <input type="text" placeholder="Nombre y apellido" required />
+        </div>
+        <div class="form-group">
+          <input type="text" placeholder="¿Cuántos asistentes?" required />
+        </div>
+        <div class="form-group attend-group">
+          <label>¿Asistís?</label>
+          <div class="attend-btns">
+            <button type="button" class="attend-btn" onclick="selectAttend(this, 'si')">Sí, ahí estaré</button>
+            <button type="button" class="attend-btn" onclick="selectAttend(this, 'no')">No puedo ir</button>
+          </div>
+          <input type="hidden" id="attendValue" name="attend" />
+        </div>
+        <div class="form-group">
+          <select>
+            <option value="">Restricción alimentaria</option>
+            <option value="ninguna">Ninguna</option>
+            <option value="vegetariano">Vegetariano</option>
+            <option value="vegano">Vegano</option>
+            <option value="celiaco">Celíaco</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-solid btn-solid--full">Confirmar asistencia</button>
+      </form>
+      <div class="rsvp-success" id="rsvpSuccess">
+        ¡Gracias! Tu confirmación fue registrada. &#10003;
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALERÍA ===== -->
+  <section class="gallery-section">
+    <p class="section-label">nuestra historia</p>
+    <h2 class="gallery-title">Momentos juntos</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=600&q=80')"></div>
+      <div class="gallery-item gallery-item--tall" style="background-image: url('https://images.unsplash.com/photo-1606800052052-a08af7148866?w=600&q=80')"></div>
+      <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&q=80')"></div>
+      <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&q=80')"></div>
+      <div class="gallery-item gallery-item--wide" style="background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&q=80')"></div>
+      <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1550005809-91ad75fb315f?w=600&q=80')"></div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p class="footer-names">Lucas <span>&</span> Valentina</p>
+    <p class="footer-date">15 · XI · 2025</p>
+    <p class="footer-credit">Con amor &hearts;</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
