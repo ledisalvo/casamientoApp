@@ -86,7 +86,7 @@ export function GuestForm({ guest, onSave, onClose }: Props) {
     setSending(true)
     setError(null)
     try {
-      let guestId = guest?.id
+      let guestId: string = guest?.id ?? ''
       if (!guestId) {
         console.log('[sendInvite] creating guest...')
         guestId = await createGuestWithMembers({ familyName: familyName.trim(), members: membersPayload() })
