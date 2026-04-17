@@ -7,7 +7,7 @@ interface CountdownValues {
   seconds: string
 }
 
-const TARGET = new Date('2025-11-15T18:00:00')
+const TARGET = new Date('2027-02-05T18:00:00')
 
 function pad(n: number): string {
   return String(Math.max(0, n)).padStart(2, '0')

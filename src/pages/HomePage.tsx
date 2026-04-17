@@ -3,7 +3,6 @@ import { HeroSection }      from '@/components/landing/HeroSection'
 import { CountdownSection } from '@/components/landing/CountdownSection'
 import { QuoteSection }     from '@/components/landing/QuoteSection'
 import { CeremoniaSection } from '@/components/landing/CeremoniaSection'
-import { RecepcionSection } from '@/components/landing/RecepcionSection'
 import { DresscodeSection } from '@/components/landing/DresscodeSection'
 import { GiftSection }      from '@/components/landing/GiftSection'
 import { GallerySection }   from '@/components/landing/GallerySection'
@@ -18,7 +17,6 @@ export function HomePage() {
       <CountdownSection />
       <QuoteSection />
       <CeremoniaSection />
-      <RecepcionSection />
       <DresscodeSection />
       <GiftSection />
       <GallerySection />

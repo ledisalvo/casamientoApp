@@ -7,7 +7,7 @@ export function HeroSection() {
         <h1 className="hero-names">
           Lucas <span>&amp;</span> Cecilia
         </h1>
-        <p className="hero-date">15 · XI · 2025</p>
+        <p className="hero-date">05 · Febrero · 2027</p>
         <a href="#ceremonia" className="hero-btn">Ver invitación</a>
       </div>
       <div className="hero-scroll-hint" aria-hidden="true">&#8964;</div>

@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase'
-import type { DietaryOption, GuestLookupResult } from '@/types'
+import type { DietaryOption, GuestLookupResult, GuestMember } from '@/types'
 
 // ── Invite page ──────────────────────────────────────────────
 
@@ -91,6 +91,103 @@ export async function updateGuest(
 export async function deleteGuest(id: string) {
   const { error } = await supabase.from('guests').delete().eq('id', id)
   if (error) throw error
+}
+
+export async function createGuestWithMembers(params: {
+  familyName: string
+  members:    { name: string; email: string | null }[]
+}) {
+  const code = generateCode(params.familyName)
+
+  const { data: guest, error: guestError } = await supabase
+    .from('guests')
+    .insert({ name: params.familyName, code, email: null, max_seats: params.members.length })
+    .select('id')
+    .single()
+
+  if (guestError) throw guestError
+
+  if (params.members.length > 0) {
+    const rows = params.members.map((m) => ({
+      guest_id: guest.id,
+      name:     m.name,
+      email:    m.email || null,
+    }))
+    const { error: membersError } = await supabase.from('guest_members').insert(rows)
+    if (membersError) throw membersError
+  }
+
+  return guest.id
+}
+
+export async function listGuestMembers(guestId: string): Promise<GuestMember[]> {
+  const { data, error } = await supabase
+    .from('guest_members')
+    .select('*')
+    .eq('guest_id', guestId)
+    .order('created_at')
+
+  if (error) throw error
+  return data ?? []
+}
+
+export async function updateGuestWithMembers(
+  guestId: string,
+  params: {
+    familyName: string
+    members:    { name: string; email: string | null }[]
+  }
+) {
+  const { error: guestError } = await supabase
+    .from('guests')
+    .update({ name: params.familyName, max_seats: params.members.length })
+    .eq('id', guestId)
+
+  if (guestError) throw guestError
+
+  // replace all members
+  const { error: deleteError } = await supabase
+    .from('guest_members')
+    .delete()
+    .eq('guest_id', guestId)
+
+  if (deleteError) throw deleteError
+
+  if (params.members.length > 0) {
+    const rows = params.members.map((m) => ({
+      guest_id: guestId,
+      name:     m.name,
+      email:    m.email || null,
+    }))
+    const { error: insertError } = await supabase.from('guest_members').insert(rows)
+    if (insertError) throw insertError
+  }
+}
+
+export async function sendInviteEmail(guestId: string): Promise<{ sent: number; total: number }> {
+  const { data, error } = await supabase.functions.invoke<{ sent: number; total: number }>(
+    'send-invite',
+    { body: { guestId } }
+  )
+  if (error) {
+    // Extract actual body from edge function error
+    const body = await (error as any).context?.json?.().catch(() => null)
+    console.error('[sendInviteEmail] edge function error body:', body)
+    throw new Error(body?.error ?? error.message)
+  }
+  return data ?? { sent: 0, total: 0 }
+}
+
+function generateCode(familyName: string): string {
+  const slug = familyName
+    .toUpperCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^A-Z0-9\s]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+  const suffix = Math.random().toString(36).slice(2, 6).toUpperCase()
+  return `${slug}-${suffix}`
 }
 
 export async function updateDeadline(isoString: string) {

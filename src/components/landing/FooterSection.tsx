@@ -4,7 +4,7 @@ export function FooterSection() {
       <p className="footer-names">
         Lucas <span>&amp;</span> Cecilia
       </p>
-      <p className="footer-date">15 · XI · 2025</p>
+      <p className="footer-date">05 · Febrero · 2027</p>
       <p className="footer-credit">Con amor ♥</p>
     </footer>
   )

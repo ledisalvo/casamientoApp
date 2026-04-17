@@ -41,6 +41,14 @@ export interface Metrics {
   declined_count: number
 }
 
+export interface GuestMember {
+  id:         string
+  guest_id:   string
+  name:       string
+  email:      string | null
+  created_at: string
+}
+
 // Returned by the get-guest-by-code Edge Function
 export interface GuestLookupResult {
   guest: Pick<Guest, 'id' | 'code' | 'name' | 'max_seats'>
