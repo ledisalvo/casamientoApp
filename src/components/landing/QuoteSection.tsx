@@ -16,8 +16,8 @@ export function QuoteSection() {
   return (
     <section className="quote-section">
       <blockquote>
-        {quote.text.split('\n').map((line, i) => (
-          <span key={i}>{line}{i < quote.text.split('\n').length - 1 && <br />}</span>
+        {quote.text.split(/\\n|\n/).map((line, i, arr) => (
+          <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
         ))}
       </blockquote>
       <cite>{quote.author}</cite>

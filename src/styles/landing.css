@@ -568,8 +568,9 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
   }
-  .gallery-item--tall { grid-row: span 1; }
-  .gallery-item--wide { grid-column: span 1; }
+  .gallery-item        { min-height: 220px; }
+  .gallery-item--tall  { grid-row: span 1; }
+  .gallery-item--wide  { grid-column: span 1; }
 
   .countdown-item { min-width: 64px; }
   .countdown-sep  { font-size: 36px; }
@@ -577,6 +578,7 @@
 
 @media (max-width: 480px) {
   .gallery-grid   { grid-template-columns: 1fr; }
+  .gallery-item   { min-height: 260px; }
   .countdown      { gap: 0; }
   .countdown-item { min-width: 52px; }
 }
