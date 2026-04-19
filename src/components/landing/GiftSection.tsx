@@ -1,7 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getBankDetails, type BankDetails } from '@/lib/queries'
 
 export function GiftSection() {
   const [showInfo, setShowInfo] = useState(false)
+  const [bank, setBank] = useState<BankDetails | null>(null)
+
+  useEffect(() => {
+    getBankDetails().then(setBank)
+  }, [])
 
   return (
     <section className="gift-section">
@@ -12,7 +18,7 @@ export function GiftSection() {
           Tu presencia es el regalo<br />más importante
         </h2>
         <p className="gift-text">
-          Si querés hacernos un regalo, podés hacerlo a través de una transferencia bancaria.
+          Pero si querés hacernos un regalo, podés hacerlo a través de una transferencia bancaria.
         </p>
         <button
           className="btn-solid"
@@ -22,12 +28,12 @@ export function GiftSection() {
         >
           {showInfo ? 'Ocultar datos' : 'Ver datos bancarios'}
         </button>
-        {showInfo && (
+        {showInfo && bank && (
           <div className="gift-info" id="gift-info">
-            <p><strong>Titular:</strong> Lucas Gómez</p>
-            <p><strong>Banco:</strong> Banco Nación</p>
-            <p><strong>CBU:</strong> 0110123456789012345678</p>
-            <p><strong>Alias:</strong> LUCAS.BODA.2025</p>
+            <p><strong>Titular:</strong> {bank.titular}</p>
+            <p><strong>Banco:</strong> {bank.banco}</p>
+            <p><strong>CBU:</strong> {bank.cbu}</p>
+            <p><strong>Alias:</strong> {bank.alias}</p>
           </div>
         )}
       </div>

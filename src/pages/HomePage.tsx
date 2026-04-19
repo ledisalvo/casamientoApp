@@ -5,8 +5,9 @@ import { QuoteSection }     from '@/components/landing/QuoteSection'
 import { CeremoniaSection } from '@/components/landing/CeremoniaSection'
 import { DresscodeSection } from '@/components/landing/DresscodeSection'
 import { GiftSection }      from '@/components/landing/GiftSection'
-import { GallerySection }   from '@/components/landing/GallerySection'
-import { FooterSection }    from '@/components/landing/FooterSection'
+import { GallerySection }          from '@/components/landing/GallerySection'
+import { SongSuggestionsSection }  from '@/components/landing/SongSuggestionsSection'
+import { FooterSection }           from '@/components/landing/FooterSection'
 
 // NOTE: No RSVP section here — RSVP is handled at /invite/:code (personalized per guest)
 
@@ -20,6 +21,7 @@ export function HomePage() {
       <DresscodeSection />
       <GiftSection />
       <GallerySection />
+      <SongSuggestionsSection />
       <FooterSection />
     </>
   )

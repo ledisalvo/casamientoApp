@@ -8,7 +8,9 @@ import { RSVPFilters }      from '@/components/admin/RSVPFilters'
 import { GuestTable }       from '@/components/admin/GuestTable'
 import { GuestForm }        from '@/components/admin/GuestForm'
 import { DeleteConfirm }    from '@/components/admin/DeleteConfirm'
-import { DeadlineConfig }   from '@/components/admin/DeadlineConfig'
+import { DeadlineConfig }    from '@/components/admin/DeadlineConfig'
+import { BankDetailsConfig }    from '@/components/admin/BankDetailsConfig'
+import { SongSuggestionsPanel } from '@/components/admin/SongSuggestionsPanel'
 import { CSVExport }        from '@/components/admin/CSVExport'
 import { DashboardSkeleton } from '@/components/admin/DashboardSkeleton'
 import '@/styles/admin.css'
@@ -57,6 +59,7 @@ export function AdminDashboardPage() {
             Lucas &amp; Cecilia — Invitados
           </h1>
           <DeadlineConfig />
+          <BankDetailsConfig />
         </div>
         <div className="flex items-center gap-3">
           <button
@@ -92,6 +95,9 @@ export function AdminDashboardPage() {
             onDelete={(g) => setDeleteGuest(g)}
           />
         </div>
+
+        {/* Song suggestions */}
+        <SongSuggestionsPanel />
 
       </main>
 

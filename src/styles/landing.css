@@ -16,8 +16,9 @@
 
 .btn-outline {
   display: inline-block;
+  align-self: flex-start;
   margin-top: 24px;
-  padding: 12px 32px;
+  padding: 10px 20px;
   border: 1px solid #2c2c2c;
   color: #2c2c2c;
   font-family: 'Montserrat', sans-serif;
@@ -397,6 +398,129 @@
 
 .gallery-item--tall { grid-row: span 2; }
 .gallery-item--wide { grid-column: span 2; }
+
+/* Songs */
+.songs-section {
+  background: #fff;
+  padding: 90px 20px;
+  text-align: center;
+}
+
+.songs-inner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.songs-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 300;
+  color: #2c2c2c;
+  margin-bottom: 12px;
+}
+
+.songs-subtitle {
+  font-size: 14px;
+  color: #6a6a6a;
+  font-weight: 300;
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+.songs-count {
+  color: #a39086;
+}
+
+.songs-search-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.songs-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #d0c8c0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #2c2c2c;
+  background: #faf8f5;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.songs-input:focus { border-color: #a39086; }
+.songs-input::placeholder { color: #b0a89e; }
+
+.songs-error {
+  font-size: 13px;
+  color: #a39086;
+  margin-top: 12px;
+}
+
+.songs-results {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+  text-align: left;
+}
+
+.songs-track {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid #ede8e0;
+}
+
+.songs-album-art {
+  width: 52px;
+  height: 52px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.songs-track-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.songs-track-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #2c2c2c;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.songs-track-artist {
+  font-size: 12px;
+  color: #7a6a60;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.songs-btn-done {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 10px 20px;
+  border: 1px solid #a39086;
+  color: #a39086;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: transparent;
+  cursor: default;
+  flex-shrink: 0;
+}
 
 /* Footer */
 .footer {

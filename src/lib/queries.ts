@@ -190,6 +190,92 @@ function generateCode(familyName: string): string {
   return `${slug}-${suffix}`
 }
 
+export interface BankDetails {
+  titular: string
+  banco:   string
+  cbu:     string
+  alias:   string
+}
+
+export async function getBankDetails(): Promise<BankDetails | null> {
+  const { data, error } = await supabase
+    .from('app_config')
+    .select('key, value')
+    .in('key', ['bank_titular', 'bank_banco', 'bank_cbu', 'bank_alias'])
+
+  if (error || !data?.length) return null
+
+  const map = Object.fromEntries(data.map((r) => [r.key, r.value]))
+  return {
+    titular: map['bank_titular'] ?? '',
+    banco:   map['bank_banco']   ?? '',
+    cbu:     map['bank_cbu']     ?? '',
+    alias:   map['bank_alias']   ?? '',
+  }
+}
+
+export async function updateBankDetails(details: BankDetails): Promise<void> {
+  const rows = [
+    { key: 'bank_titular', value: details.titular },
+    { key: 'bank_banco',   value: details.banco   },
+    { key: 'bank_cbu',     value: details.cbu      },
+    { key: 'bank_alias',   value: details.alias    },
+  ]
+  for (const row of rows) {
+    const { error } = await supabase
+      .from('app_config')
+      .update({ value: row.value, updated_at: new Date().toISOString() })
+      .eq('key', row.key)
+    if (error) throw error
+  }
+}
+
+// ── Song suggestions ─────────────────────────────────────────
+
+export interface SpotifyTrack {
+  id:          string
+  name:        string
+  artist:      string
+  album:       string
+  image:       string | null
+  preview_url: string | null
+}
+
+export async function searchSpotifyTracks(query: string): Promise<SpotifyTrack[]> {
+  const { data, error } = await supabase.functions.invoke<SpotifyTrack[]>(
+    'spotify-search',
+    { body: { query } }
+  )
+  if (error) throw error
+  return data ?? []
+}
+
+export async function suggestSong(track: SpotifyTrack): Promise<void> {
+  const { error } = await supabase.from('song_suggestions').insert({
+    spotify_track_id: track.id,
+    track_name:       track.name,
+    artist_name:      track.artist,
+    album_name:       track.album,
+    album_image_url:  track.image,
+    preview_url:      track.preview_url,
+  })
+  if (error) throw error
+}
+
+export async function listSongSuggestions() {
+  const { data, error } = await supabase
+    .from('song_suggestions')
+    .select('*')
+    .order('suggested_at', { ascending: false })
+  if (error) throw error
+  return data ?? []
+}
+
+export async function deleteSongSuggestion(id: string): Promise<void> {
+  const { error } = await supabase.from('song_suggestions').delete().eq('id', id)
+  if (error) throw error
+}
+
 export async function updateDeadline(isoString: string) {
   const { error } = await supabase
     .from('app_config')
