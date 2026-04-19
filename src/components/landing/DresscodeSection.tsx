@@ -14,7 +14,7 @@ export function DresscodeSection() {
         <p className="section-label">código de vestimenta</p>
         <h2 className="dresscode-title">Elegante</h2>
         <p className="dresscode-text">
-          Te pedimos que evites los tonos blancos, beiges y verdes; lo reservamos para los novios.<br />
+          Te pedimos que evites los colores blanco, beige y los tonos en verde.<br />
           ¡Vení a brillar con nosotros!
         </p>
         <div className="dresscode-palette" role="list" aria-label="Paleta de colores sugerida">

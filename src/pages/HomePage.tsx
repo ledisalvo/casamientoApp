@@ -20,8 +20,8 @@ export function HomePage() {
       <CeremoniaSection />
       <DresscodeSection />
       <GiftSection />
-      <GallerySection />
       <SongSuggestionsSection />
+      <GallerySection />
       <FooterSection />
     </>
   )

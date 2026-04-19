@@ -10,6 +10,7 @@ import { GuestForm }        from '@/components/admin/GuestForm'
 import { DeleteConfirm }    from '@/components/admin/DeleteConfirm'
 import { DeadlineConfig }    from '@/components/admin/DeadlineConfig'
 import { BankDetailsConfig }    from '@/components/admin/BankDetailsConfig'
+import { QuoteConfig }          from '@/components/admin/QuoteConfig'
 import { SongSuggestionsPanel } from '@/components/admin/SongSuggestionsPanel'
 import { CSVExport }        from '@/components/admin/CSVExport'
 import { DashboardSkeleton } from '@/components/admin/DashboardSkeleton'
@@ -60,6 +61,7 @@ export function AdminDashboardPage() {
           </h1>
           <DeadlineConfig />
           <BankDetailsConfig />
+          <QuoteConfig />
         </div>
         <div className="flex items-center gap-3">
           <button

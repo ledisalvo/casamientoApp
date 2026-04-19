@@ -230,6 +230,34 @@ export async function updateBankDetails(details: BankDetails): Promise<void> {
   }
 }
 
+// ── Quote ────────────────────────────────────────────────────
+
+export interface QuoteConfig {
+  text:   string
+  author: string
+}
+
+export async function getQuote(): Promise<QuoteConfig | null> {
+  const { data, error } = await supabase
+    .from('app_config')
+    .select('key, value')
+    .in('key', ['quote_text', 'quote_author'])
+
+  if (error || !data?.length) return null
+  const map = Object.fromEntries(data.map((r) => [r.key, r.value]))
+  return { text: map['quote_text'] ?? '', author: map['quote_author'] ?? '' }
+}
+
+export async function updateQuote(quote: QuoteConfig): Promise<void> {
+  for (const [key, value] of [['quote_text', quote.text], ['quote_author', quote.author]]) {
+    const { error } = await supabase
+      .from('app_config')
+      .update({ value, updated_at: new Date().toISOString() })
+      .eq('key', key)
+    if (error) throw error
+  }
+}
+
 // ── Song suggestions ─────────────────────────────────────────
 
 export interface SpotifyTrack {
