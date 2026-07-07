@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase'
-import type { DietaryOption, GuestLookupResult, GuestMember } from '@/types'
+import type { DietaryOption, GuestLookupResult, GuestMember, PublicRSVP } from '@/types'
 
 // ── Invite page ──────────────────────────────────────────────
 
@@ -37,6 +37,40 @@ export async function submitRSVP(params: {
     seat_count: params.attending ? params.seatCount : null,
     dietary:    params.attending ? params.dietary : 'ninguna',
   })
+  if (error) throw error
+}
+
+// ── Public RSVP (link genérico + landing) ────────────────────
+
+/** Confirmación pública desde la landing. Insert anónimo (permitido por RLS). */
+export async function submitPublicRSVP(params: {
+  name:      string
+  attending: boolean
+  seatCount: number | null
+  dietary?:  string
+}): Promise<void> {
+  const { error } = await supabase.from('public_rsvps').insert({
+    name:       params.name.trim(),
+    attending:  params.attending,
+    seat_count: params.attending ? (params.seatCount ?? 1) : 1,
+    dietary:    params.attending ? (params.dietary ?? 'ninguna') : 'ninguna',
+  })
+  if (error) throw error
+}
+
+/** Listado de confirmaciones públicas para el admin (RLS: solo authenticated). */
+export async function listPublicRSVPs(): Promise<PublicRSVP[]> {
+  const { data, error } = await supabase
+    .from('public_rsvps')
+    .select('*')
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data ?? []
+}
+
+/** Borrado de una confirmación (moderación de colados). RLS: solo authenticated. */
+export async function deletePublicRSVP(id: string): Promise<void> {
+  const { error } = await supabase.from('public_rsvps').delete().eq('id', id)
   if (error) throw error
 }
 
