@@ -11,9 +11,9 @@ See: .paul/PROJECT.md (updated 2026-07-06)
 
 Milestone: v0.1 Initial Release
 Phase: 1 de TBD (Invitaciones por WhatsApp + RSVP público) — Planning
-Plan: 01-02 (WhatsApp masivo + moderación) — PLAN creado, NO ejecutado (esperando reconciliación de rama + aprobación)
-Status: 01-01 completo; 01-02 planificado, bloqueado por reconciliación de la rama WhatsApp
-Last activity: 2026-07-06 — Creado .paul/phases/01-invitaciones-whatsapp/01-02-PLAN.md (solo planificación)
+Plan: 01-02 (WhatsApp masivo + moderación) — APPLY en curso, bloqueado en checkpoint human-verify
+Status: rama WhatsApp integrada (merge f4e8596); tasks 1-3 aplicadas (commit dd518d0); esperando verificación humana
+Last activity: 2026-07-06 — APPLY 01-02: shareInvite (Web Share), botón en dashboard, PublicRSVPPanel. Desviación: NO se retiró el 1-a-1 (a decidir).
 
 Progress:
 - Milestone: [█░░░░░░░░░] ~10%
