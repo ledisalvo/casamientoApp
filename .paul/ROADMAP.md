@@ -20,7 +20,7 @@ Phases execute in numeric order: 1 → 2 → 2.1 → 2.2 → 3 → 3.1 → 4
 
 | Phase | Name | Plans | Status | Completed |
 |-------|------|-------|--------|-----------|
-| 1 | Invitaciones por WhatsApp + RSVP público | 2 | In progress (1/2) | - |
+| 1 | Invitaciones por WhatsApp + RSVP público | 2 | ✅ Complete | 2026-07-06 |
 
 ## Phase Details
 
@@ -38,7 +38,7 @@ Phases execute in numeric order: 1 → 2 → 2.1 → 2.2 → 3 → 3.1 → 4
 
 **Plans:**
 - [x] 01-01: RSVP público end-to-end (tabla + RLS + confirmación en la landing) — completado 2026-07-06
-- [ ] 01-02: Admin — compartir por WhatsApp (envío masivo) + panel de moderación _(PLAN creado; ejecución pendiente de reconciliar la rama WhatsApp)_
+- [x] 01-02: Admin — compartir por WhatsApp (envío masivo) + panel de moderación — completado 2026-07-06
 
 _Nota: la Fase 1 anterior (pulido UX del flujo `/invite/:code`) fue archivada en `.paul/phases/_archived/` tras el cambio de rumbo. Su pulido de UI se reaprovecha en la landing._
 

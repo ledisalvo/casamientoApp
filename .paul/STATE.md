@@ -5,26 +5,27 @@
 See: .paul/PROJECT.md (updated 2026-07-06)
 
 **Core value:** Guests can RSVP to the wedding in seconds from their phone, while the hosts see confirmed attendance in real time.
-**Current focus:** Fase 1 — Invitaciones por WhatsApp + RSVP público (link genérico)
+**Current focus:** Fase 1 COMPLETA — lista para planificar la próxima fase
 
 ## Current Position
 
 Milestone: v0.1 Initial Release
-Phase: 1 de TBD (Invitaciones por WhatsApp + RSVP público) — Planning
-Plan: 01-02 (WhatsApp masivo + moderación) — APPLY en curso, bloqueado en checkpoint human-verify
-Status: rama WhatsApp integrada (merge f4e8596); tasks 1-3 aplicadas (commit dd518d0); esperando verificación humana
-Last activity: 2026-07-06 — APPLY 01-02: shareInvite (Web Share), botón en dashboard, PublicRSVPPanel. Desviación: NO se retiró el 1-a-1 (a decidir).
+Phase: 1 COMPLETA (Invitaciones por WhatsApp + RSVP público) — próxima fase sin definir
+Plan: —
+Status: Fase 1 cerrada; listo para /paul:plan de la próxima fase
+Last activity: 2026-07-06 — Fase 1 completa (01-01 + 01-02 unificados); verificado y aprobado por el usuario
 
 Progress:
-- Milestone: [█░░░░░░░░░] ~10%
-- Fase 1: [█████░░░░░] 50% (1 de 2 planes; 01-02 planificado)
+- Milestone: [███░░░░░░░] ~25%
+- Fase 1: [██████████] 100% (2 de 2 planes)
 
 ## Loop Position
 
 Current loop state:
 ```
 Plan 01-01:  PLAN ✓ ──▶ APPLY ✓ ──▶ UNIFY ✓   [cerrado]
-Plan 01-02:  PLAN ✓ ──▶ APPLY ○ ──▶ UNIFY ○   [planificado, sin ejecutar]
+Plan 01-02:  PLAN ✓ ──▶ APPLY ✓ ──▶ UNIFY ✓   [cerrado]
+Fase 1: COMPLETA ✓
 ```
 
 ## Notas de ejecución (APPLY 01-01)
@@ -60,9 +61,14 @@ Plan 01-02:  PLAN ✓ ──▶ APPLY ○ ──▶ UNIFY ○   [planificado, si
 ## Session Continuity
 
 Last session: 2026-07-06
-Stopped at: PLAN 01-02 creado (no ejecutado). Loop 01-01 cerrado.
-Next action: 1) Reconciliar la rama feature/whatsapp-invites-eclesiastes con la base de PAUL. 2) Aprobar y correr /paul:apply .paul/phases/01-invitaciones-whatsapp/01-02-PLAN.md
-Resume file: .paul/phases/01-invitaciones-whatsapp/01-02-PLAN.md
+Stopped at: Fase 1 completa (RSVP público + WhatsApp masivo + moderación), verificada y aprobada.
+Next action: /paul:plan para la próxima fase (sugerido: fix de datos hardcodeados). Falta probar Web Share multi-contacto en deploy móvil real.
+Resume file: .paul/ROADMAP.md
+
+### Git State
+Last commit (código): 96cb84a (retiro 1-a-1)
+Branch: feature/paul-init (PR #1 draft → main). NO se mergeó a main (regla: PRs van a develop).
+Ramas integradas: feature/whatsapp-invites-eclesiastes (merge f4e8596)
 
 ## Notas de contexto (WhatsApp feature)
 - El código de WhatsApp vive SIN COMMITEAR en el checkout principal, rama `feature/whatsapp-invites-eclesiastes`:

@@ -36,16 +36,18 @@ Guests can RSVP to the wedding in seconds from their phone, while the hosts see 
 - [x] Guest RSVP flow backed by Supabase — implemented
 - [x] Song suggestions capture — implemented
 - [x] Admin login + dashboard with guest management and CSV export — implemented
+- [x] RSVP público en la landing (link genérico, nombre + cantidad, RLS) — Fase 1 (01-01)
+- [x] Envío masivo por WhatsApp desde el admin + panel de moderación de confirmaciones — Fase 1 (01-02)
 
 ### Active (In Progress)
 
-- [ ] RSVP público en la landing (link genérico, nombre libre + cantidad) — Fase 1, plan 01-01
-- [ ] Envío masivo por WhatsApp desde el admin (Web Share API) + panel de moderación — Fase 1, plan 01-02
+Nada en curso — Fase 1 completa.
 
 ### Planned (Next)
 
 - Fix de datos hardcodeados (nombres, fecha, datos del evento)
 - Retiro del flujo viejo `/invite/:code` si el cliente valida el MVP público
+- Verificar el envío masivo por WhatsApp (Web Share, multi-contacto) en deploy móvil real
 
 ### Out of Scope
 
@@ -90,6 +92,8 @@ Existing React + Vite + TypeScript SPA backed by Supabase (Postgres + auth). Tab
 | RSVP público en la landing + envío masivo por WhatsApp (link genérico, modelo latarjetadigital) | El link único no permite enviar a varios contactos de una; WhatsApp obliga a mensaje/link idéntico para todos. Se prioriza el envío masivo sobre el pre-cargado de cupos. | 2026-07-06 | Active |
 | Moderación por borrado en el admin (no se puede impedir colados con link público) | RLS: insert anónimo permitido, lectura/borrado solo admin | 2026-07-06 | Active |
 | RSVP público como tabla nueva `public_rsvps` (no se toca `guests`/`rsvp_responses`) | MVP reversible, menor riesgo mientras se valida con el cliente | 2026-07-06 | Active |
+| Un solo flujo de invitación por WhatsApp: masivo genérico (se retiró el 1-a-1 con link personalizado) | El envío 1-a-1 obligaba a buscar cada contacto; el masivo (Web Share) resuelve el problema real | 2026-07-06 | Active |
+| `shareInvite` abre WhatsApp (Web Share en móvil / `wa.me` en desktop), no copia al portapapeles | Feedback del usuario: quiere elegir contactos en WhatsApp, no pegar el mensaje | 2026-07-06 | Active |
 | Supabase backend | Managed Postgres + auth + RLS, fast to ship | 2026-07-06 | Active |
 | Vercel SPA deploy | Simple static hosting for a Vite build | 2026-07-06 | Active |
 
@@ -123,4 +127,4 @@ Existing React + Vite + TypeScript SPA backed by Supabase (Postgres + auth). Tab
 
 ---
 *PROJECT.md — Updated when requirements or context change*
-*Last updated: 2026-07-06*
+*Last updated: 2026-07-06 after Phase 1*
