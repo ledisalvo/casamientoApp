@@ -39,11 +39,13 @@ Guests can RSVP to the wedding in seconds from their phone, while the hosts see 
 
 ### Active (In Progress)
 
-None yet — to be set during `/paul:plan`.
+- [ ] RSVP público en la landing (link genérico, nombre libre + cantidad) — Fase 1, plan 01-01
+- [ ] Envío masivo por WhatsApp desde el admin (Web Share API) + panel de moderación — Fase 1, plan 01-02
 
 ### Planned (Next)
 
-- To be defined during `/paul:plan`
+- Fix de datos hardcodeados (nombres, fecha, datos del evento)
+- Retiro del flujo viejo `/invite/:code` si el cliente valida el MVP público
 
 ### Out of Scope
 
@@ -84,7 +86,10 @@ Existing React + Vite + TypeScript SPA backed by Supabase (Postgres + auth). Tab
 
 | Decision | Rationale | Date | Status |
 |----------|-----------|------|--------|
-| Personalized RSVP at `/invite/:code` instead of a public form | Per-guest tracking and pre-filled member lists | 2026-07-06 | Active |
+| Personalized RSVP at `/invite/:code` instead of a public form | Per-guest tracking and pre-filled member lists | 2026-07-06 | **Superseded** (2026-07-06) |
+| RSVP público en la landing + envío masivo por WhatsApp (link genérico, modelo latarjetadigital) | El link único no permite enviar a varios contactos de una; WhatsApp obliga a mensaje/link idéntico para todos. Se prioriza el envío masivo sobre el pre-cargado de cupos. | 2026-07-06 | Active |
+| Moderación por borrado en el admin (no se puede impedir colados con link público) | RLS: insert anónimo permitido, lectura/borrado solo admin | 2026-07-06 | Active |
+| RSVP público como tabla nueva `public_rsvps` (no se toca `guests`/`rsvp_responses`) | MVP reversible, menor riesgo mientras se valida con el cliente | 2026-07-06 | Active |
 | Supabase backend | Managed Postgres + auth + RLS, fast to ship | 2026-07-06 | Active |
 | Vercel SPA deploy | Simple static hosting for a Vite build | 2026-07-06 | Active |
 

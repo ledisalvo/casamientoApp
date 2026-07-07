@@ -20,26 +20,29 @@ Phases execute in numeric order: 1 → 2 → 2.1 → 2.2 → 3 → 3.1 → 4
 
 | Phase | Name | Plans | Status | Completed |
 |-------|------|-------|--------|-----------|
-| 1 | UX flujo de invitación | 1 | Planning | - |
+| 1 | Invitaciones por WhatsApp + RSVP público | 2 | Planning | - |
 
 ## Phase Details
 
-### Phase 1: UX flujo de invitación
+### Phase 1: Invitaciones por WhatsApp + RSVP público
 
-**Goal:** Pulir la experiencia de UX/diseño del flujo de invitación del invitado (`/invite/:code`) en móvil, sin cambiar la lógica de negocio.
+**Goal:** Permitir enviar la invitación a varios contactos de WhatsApp de una sola vez (mensaje/link genérico) y que cada invitado confirme su asistencia en la landing pública (modelo latarjetadigital), con moderación desde el admin.
 **Depends on:** Nothing (primera fase)
-**Research:** Unlikely (patrones internos de UI, sin nuevas dependencias)
+**Research:** Unlikely (Web Share API + Supabase RLS, patrones conocidos)
 
 **Scope:**
-- Loader de marca y transiciones suaves de entrada entre estados
-- Stepper de asistentes touch-friendly (reemplaza input number)
-- Foco visible y toggle "¿Asistís?" accesible por teclado
-- Respeto de `prefers-reduced-motion`
+- Tabla `public_rsvps` + RLS (insert anónimo, lectura/borrado solo admin)
+- Sección de confirmación pública en la landing (nombre libre + cantidad, lee `?n=`)
+- Botón "Compartir por WhatsApp" con Web Share API (selección múltiple de contactos, mensaje genérico + link a la landing)
+- Panel de moderación en el admin (listar/borrar confirmaciones, incl. colados)
 
 **Plans:**
-- [ ] 01-01: Pulido UX del flujo de invitación del invitado
+- [ ] 01-01: RSVP público end-to-end (tabla + RLS + confirmación en la landing)
+- [ ] 01-02: Admin — compartir por WhatsApp (envío masivo) + panel de moderación
 
-_Fases siguientes se definirán en próximos `/paul:plan` (ej. fix de datos hardcodeados, UX de landing, UX de admin)._
+_Nota: la Fase 1 anterior (pulido UX del flujo `/invite/:code`) fue archivada en `.paul/phases/_archived/` tras el cambio de rumbo. Su pulido de UI se reaprovecha en la landing._
+
+_Fases siguientes (próximos `/paul:plan`): fix de datos hardcodeados; retiro del flujo `/invite/:code` si el cliente valida el MVP; identidad/cupos más estrictos si hiciera falta._
 
 ---
 *Roadmap created: 2026-07-06*
