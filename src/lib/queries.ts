@@ -130,13 +130,13 @@ export async function deleteGuest(id: string) {
 export async function createGuestWithMembers(params: {
   familyName: string
   members:    { name: string; email: string | null }[]
-}) {
+}): Promise<{ id: string; code: string }> {
   const code = generateCode(params.familyName)
 
   const { data: guest, error: guestError } = await supabase
     .from('guests')
     .insert({ name: params.familyName, code, email: null, max_seats: params.members.length })
-    .select('id')
+    .select('id, code')
     .single()
 
   if (guestError) throw guestError
@@ -151,7 +151,7 @@ export async function createGuestWithMembers(params: {
     if (membersError) throw membersError
   }
 
-  return guest.id
+  return { id: guest.id, code: guest.code }
 }
 
 export async function listGuestMembers(guestId: string): Promise<GuestMember[]> {
@@ -196,20 +196,6 @@ export async function updateGuestWithMembers(
     const { error: insertError } = await supabase.from('guest_members').insert(rows)
     if (insertError) throw insertError
   }
-}
-
-export async function sendInviteEmail(guestId: string): Promise<{ sent: number; total: number }> {
-  const { data, error } = await supabase.functions.invoke<{ sent: number; total: number }>(
-    'send-invite',
-    { body: { guestId } }
-  )
-  if (error) {
-    // Extract actual body from edge function error
-    const body = await (error as any).context?.json?.().catch(() => null)
-    console.error('[sendInviteEmail] edge function error body:', body)
-    throw new Error(body?.error ?? error.message)
-  }
-  return data ?? { sent: 0, total: 0 }
 }
 
 function generateCode(familyName: string): string {
