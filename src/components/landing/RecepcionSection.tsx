@@ -6,7 +6,7 @@ export function RecepcionSection() {
           <p className="event-tag">Recepción</p>
           <h2 className="event-title">Salón Los Jardines</h2>
           <div className="event-details">
-            <p>Sábado 15 de noviembre de 2025</p>
+            <p>Viernes 5 de febrero de 2027</p>
             <p>20:30 hs</p>
             <p>Av. del Libertador 5678, CABA</p>
           </div>

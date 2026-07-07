@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { getQuote } from '@/lib/queries'
 
 const FALLBACK = {
-  text:   'Te amo sin saber cómo, ni cuándo, ni de dónde.\nTe amo directamente, sin problemas ni orgullo:\nasí te amo porque no sé amar de otra manera.',
-  author: '— Pablo Neruda',
+  text:   'Más valen dos que uno...\nSi caen, el uno levanta al otro...\nUno solo puede ser vencido, pero dos pueden resistir.\n¡La cuerda de tres hilos no se rompe fácilmente!',
+  author: '— Eclesiastés 4:9-12',
 }
 
 export function QuoteSection() {

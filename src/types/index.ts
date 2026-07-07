@@ -54,3 +54,15 @@ export interface GuestLookupResult {
   guest: Pick<Guest, 'id' | 'code' | 'name' | 'max_seats'>
   rsvp: Pick<RSVPResponse, 'id' | 'attending' | 'seat_count' | 'dietary' | 'responded_at'> | null
 }
+
+// ── Public RSVP (link genérico + confirmación en la landing) ──
+// Modelo público: el invitado se identifica con nombre libre. No está ligado
+// a la tabla guests. Ver migración 008_public_rsvps.sql.
+export interface PublicRSVP {
+  id:         string
+  name:       string
+  attending:  boolean
+  seat_count: number
+  dietary:    string
+  created_at: string
+}

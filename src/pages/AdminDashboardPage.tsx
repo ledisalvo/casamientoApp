@@ -13,7 +13,9 @@ import { BankDetailsConfig }    from '@/components/admin/BankDetailsConfig'
 import { QuoteConfig }          from '@/components/admin/QuoteConfig'
 import { SongSuggestionsPanel } from '@/components/admin/SongSuggestionsPanel'
 import { CSVExport }        from '@/components/admin/CSVExport'
+import { PublicRSVPPanel }  from '@/components/admin/PublicRSVPPanel'
 import { DashboardSkeleton } from '@/components/admin/DashboardSkeleton'
+import { shareInvite }      from '@/lib/whatsapp'
 import '@/styles/admin.css'
 import type { GuestWithRSVP, RSVPStatus } from '@/types'
 
@@ -27,10 +29,21 @@ export function AdminDashboardPage() {
   const [search,      setSearch]      = useState('')
   const [formGuest,   setFormGuest]   = useState<GuestWithRSVP | null | undefined>(undefined) // undefined = closed
   const [deleteGuest, setDeleteGuest] = useState<GuestWithRSVP | null>(null)
+  const [shareMsg,    setShareMsg]    = useState<string | null>(null)
 
   async function handleSignOut() {
     await supabase.auth.signOut()
     navigate('/admin', { replace: true })
+  }
+
+  async function handleShareInvite() {
+    const result = await shareInvite()
+    const msg =
+      result === 'whatsapp' ? 'Abriendo WhatsApp…' :
+      result === 'shared'   ? 'Invitación compartida' : null
+    if (!msg) return // cancelado
+    setShareMsg(msg)
+    window.setTimeout(() => setShareMsg(null), 4000)
   }
 
   if (loading) return <DashboardSkeleton />
@@ -65,8 +78,15 @@ export function AdminDashboardPage() {
         </div>
         <div className="flex items-center gap-3">
           <button
-            onClick={() => setFormGuest(null)}  // null = create mode
+            onClick={handleShareInvite}
             className="admin-btn-primary"
+            style={{ padding: '8px 20px' }}
+          >
+            Compartir invitación por WhatsApp
+          </button>
+          <button
+            onClick={() => setFormGuest(null)}  // null = create mode
+            className="admin-btn-ghost"
             style={{ padding: '8px 20px' }}
           >
             + Nuevo invitado
@@ -77,6 +97,12 @@ export function AdminDashboardPage() {
           </button>
         </div>
       </header>
+
+      {shareMsg && (
+        <div className="px-8 py-2 text-xs" style={{ background: '#1f2a1f', color: '#9fd39f' }} role="status" aria-live="polite">
+          {shareMsg}
+        </div>
+      )}
 
       <main className="px-8 py-8 space-y-8">
 
@@ -97,6 +123,9 @@ export function AdminDashboardPage() {
             onDelete={(g) => setDeleteGuest(g)}
           />
         </div>
+
+        {/* Confirmaciones públicas (RSVP desde la landing) */}
+        <PublicRSVPPanel />
 
         {/* Song suggestions */}
         <SongSuggestionsPanel />

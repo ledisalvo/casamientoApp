@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase'
-import type { DietaryOption, GuestLookupResult, GuestMember } from '@/types'
+import type { DietaryOption, GuestLookupResult, GuestMember, PublicRSVP } from '@/types'
 
 // ── Invite page ──────────────────────────────────────────────
 
@@ -37,6 +37,40 @@ export async function submitRSVP(params: {
     seat_count: params.attending ? params.seatCount : null,
     dietary:    params.attending ? params.dietary : 'ninguna',
   })
+  if (error) throw error
+}
+
+// ── Public RSVP (link genérico + landing) ────────────────────
+
+/** Confirmación pública desde la landing. Insert anónimo (permitido por RLS). */
+export async function submitPublicRSVP(params: {
+  name:      string
+  attending: boolean
+  seatCount: number | null
+  dietary?:  string
+}): Promise<void> {
+  const { error } = await supabase.from('public_rsvps').insert({
+    name:       params.name.trim(),
+    attending:  params.attending,
+    seat_count: params.attending ? (params.seatCount ?? 1) : 1,
+    dietary:    params.attending ? (params.dietary ?? 'ninguna') : 'ninguna',
+  })
+  if (error) throw error
+}
+
+/** Listado de confirmaciones públicas para el admin (RLS: solo authenticated). */
+export async function listPublicRSVPs(): Promise<PublicRSVP[]> {
+  const { data, error } = await supabase
+    .from('public_rsvps')
+    .select('*')
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data ?? []
+}
+
+/** Borrado de una confirmación (moderación de colados). RLS: solo authenticated. */
+export async function deletePublicRSVP(id: string): Promise<void> {
+  const { error } = await supabase.from('public_rsvps').delete().eq('id', id)
   if (error) throw error
 }
 
@@ -96,13 +130,13 @@ export async function deleteGuest(id: string) {
 export async function createGuestWithMembers(params: {
   familyName: string
   members:    { name: string; email: string | null }[]
-}) {
+}): Promise<{ id: string; code: string }> {
   const code = generateCode(params.familyName)
 
   const { data: guest, error: guestError } = await supabase
     .from('guests')
     .insert({ name: params.familyName, code, email: null, max_seats: params.members.length })
-    .select('id')
+    .select('id, code')
     .single()
 
   if (guestError) throw guestError
@@ -117,7 +151,7 @@ export async function createGuestWithMembers(params: {
     if (membersError) throw membersError
   }
 
-  return guest.id
+  return { id: guest.id, code: guest.code }
 }
 
 export async function listGuestMembers(guestId: string): Promise<GuestMember[]> {
@@ -162,20 +196,6 @@ export async function updateGuestWithMembers(
     const { error: insertError } = await supabase.from('guest_members').insert(rows)
     if (insertError) throw insertError
   }
-}
-
-export async function sendInviteEmail(guestId: string): Promise<{ sent: number; total: number }> {
-  const { data, error } = await supabase.functions.invoke<{ sent: number; total: number }>(
-    'send-invite',
-    { body: { guestId } }
-  )
-  if (error) {
-    // Extract actual body from edge function error
-    const body = await (error as any).context?.json?.().catch(() => null)
-    console.error('[sendInviteEmail] edge function error body:', body)
-    throw new Error(body?.error ?? error.message)
-  }
-  return data ?? { sent: 0, total: 0 }
 }
 
 function generateCode(familyName: string): string {

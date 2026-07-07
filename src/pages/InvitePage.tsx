@@ -74,7 +74,7 @@ export function InvitePage() {
             Lucas <span style={{ fontFamily: "'Great Vibes', cursive", color: '#aa7750' }}>&</span> Cecilia
           </h1>
           <p className="mt-3 text-sm font-light tracking-widest" style={{ color: '#a39086' }}>
-            15 · XI · 2025
+            05 · Febrero · 2027
           </p>
         </div>
 

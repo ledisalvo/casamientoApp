@@ -582,3 +582,122 @@
   .countdown      { gap: 0; }
   .countdown-item { min-width: 52px; }
 }
+
+/* RSVP público (link genérico + confirmación en la landing) */
+.rsvp-section { background: #fff; padding: 90px 20px; text-align: center; }
+.rsvp-inner   { max-width: 480px; margin: 0 auto; }
+.rsvp-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 300;
+  color: #2c2c2c;
+  margin-bottom: 32px;
+}
+
+.rsvp-form  { display: flex; flex-direction: column; gap: 24px; text-align: left; }
+.rsvp-field { display: flex; flex-direction: column; gap: 10px; }
+.rsvp-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.rsvp-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: #faf8f5;
+  border: 1px solid #d8d0c8;
+  color: #2c2c2c;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.rsvp-input::placeholder { color: #b0a89e; }
+.rsvp-input:focus-visible {
+  border-color: #aa7750;
+  box-shadow: 0 0 0 2px rgba(170, 119, 80, 0.25);
+}
+
+.rsvp-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.rsvp-toggle-btn {
+  padding: 14px;
+  background: #faf8f5;
+  border: 1px solid #d8d0c8;
+  color: #4a4a4a;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.rsvp-toggle-btn.is-active { background: #2c2c2c; border-color: #2c2c2c; color: #fff; }
+.rsvp-toggle-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(170, 119, 80, 0.5);
+}
+
+.rsvp-stepper { display: flex; align-items: center; gap: 20px; }
+.rsvp-stepper-btn {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #faf8f5;
+  border: 1px solid #d8d0c8;
+  color: #2c2c2c;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.rsvp-stepper-btn:hover:not(:disabled) { background: #2c2c2c; color: #fff; border-color: #2c2c2c; }
+.rsvp-stepper-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.rsvp-stepper-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(170, 119, 80, 0.5);
+}
+.rsvp-stepper-value {
+  min-width: 32px;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  color: #2c2c2c;
+}
+
+.rsvp-error {
+  color: #c0392b;
+  font-size: 12px;
+  font-family: 'Montserrat', sans-serif;
+}
+.rsvp-error--global { text-align: center; background: #fff0f0; padding: 10px; }
+
+.rsvp-form .btn-solid { margin-top: 4px; }
+.btn-solid:focus-visible { outline: none; box-shadow: 0 0 0 2px rgba(170, 119, 80, 0.5); }
+.btn-solid:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.rsvp-confirm       { padding: 20px 0; }
+.rsvp-confirm-icon  { font-size: 44px; color: #aa7750; margin-bottom: 12px; }
+.rsvp-confirm-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: #2c2c2c;
+  margin-bottom: 8px;
+}
+.rsvp-confirm-text { font-size: 14px; font-weight: 300; color: #6a6a6a; }
+
+/* Animación de entrada — respeta prefers-reduced-motion */
+.fade-in-up { animation: rsvpFadeInUp 0.35s ease-out; }
+@keyframes rsvpFadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-up { animation: none; }
+}

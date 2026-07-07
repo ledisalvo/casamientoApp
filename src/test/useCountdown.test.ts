@@ -6,9 +6,9 @@ describe('useCountdown', () => {
   afterEach(() => vi.useRealTimers())
 
   it('returns zeroes when target is in the past', () => {
-    // Set current time to after the wedding
+    // Set current time to after the wedding (target: 2027-02-05)
     vi.useFakeTimers()
-    vi.setSystemTime(new Date('2025-12-01T00:00:00Z'))
+    vi.setSystemTime(new Date('2027-03-01T00:00:00Z'))
 
     const { result } = renderHook(() => useCountdown())
     expect(result.current).toEqual({ days: '00', hours: '00', minutes: '00', seconds: '00' })
