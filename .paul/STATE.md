@@ -11,21 +11,26 @@ See: .paul/PROJECT.md (updated 2026-07-06)
 
 Milestone: v0.1 Initial Release
 Phase: 1 de TBD (Invitaciones por WhatsApp + RSVP público) — Planning
-Plan: 01-01 (RSVP público end-to-end) creado, esperando aprobación
-Status: PLAN creado, listo para APPLY
-Last activity: 2026-07-06 — Cambio de rumbo: fase 01-ux-flujo-invitacion archivada; creado .paul/phases/01-invitaciones-whatsapp/01-01-PLAN.md
+Plan: 01-01 (RSVP público end-to-end) — APPLY en curso
+Status: APPLY — Tasks 1-3 aplicadas y commiteadas; bloqueado en checkpoint human-verify
+Last activity: 2026-07-06 — APPLY 01-01: migración 008, queries, RSVPSection en landing (commit 154d930)
 
 Progress:
 - Milestone: [░░░░░░░░░░] 0%
-- Fase 1: [░░░░░░░░░░] 0% (0 de 2 planes)
+- Fase 1: [██░░░░░░░░] ~25% (plan 01-01 en verificación)
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ○        ○     [Plan creado, esperando aprobación]
+  ✓        ◉        ○     [Applying — esperando verificación humana]
 ```
+
+## Notas de ejecución (APPLY 01-01)
+- Task 1 (migración 008_public_rsvps): escrita, NO aplicada contra DB real (sin entorno Supabase en el job). El usuario debe aplicarla.
+- Task 2 (queries/types) y Task 3 (RSVPSection + landing): build ✓, tests 21/22.
+- ⚠️ Test `useCountdown.test.ts` falla (preexistente, ajeno): espera countdown vencido pero TARGET=2027-02-05. Ligado al deferred issue de fecha.
 
 ## Accumulated Context
 
