@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { QRDownload } from './QRDownload'
 import { getStatus } from '@/lib/csv'
+import { buildInviteMessage, getWhatsAppShareUrl } from '@/lib/whatsapp'
 import type { GuestWithRSVP } from '@/types'
 
 interface Props {
@@ -113,6 +114,17 @@ export function GuestTable({ guests, onEdit, onDelete }: Props) {
                   <td>
                     <div className="flex gap-2 items-center">
                       <button onClick={() => onEdit(guest)} className="admin-btn-ghost">Editar</button>
+                      <button
+                        onClick={() =>
+                          window.open(
+                            getWhatsAppShareUrl(buildInviteMessage(guest.name, guest.max_seats, guest.code)),
+                            '_blank',
+                          )
+                        }
+                        className="admin-btn-ghost"
+                      >
+                        WhatsApp
+                      </button>
                       <QRDownload code={guest.code} />
                       <button onClick={() => onDelete(guest)} className="admin-btn-danger">Eliminar</button>
                     </div>

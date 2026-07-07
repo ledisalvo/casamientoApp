@@ -4,13 +4,12 @@ import {
   createGuestWithMembers,
   updateGuestWithMembers,
   listGuestMembers,
-  sendInviteEmail,
 } from '@/lib/queries'
+import { buildInviteMessage, getWhatsAppShareUrl } from '@/lib/whatsapp'
 import type { GuestWithRSVP } from '@/types'
 
 interface Member {
-  name:  string
-  email: string
+  name: string
 }
 
 interface Props {
@@ -25,7 +24,7 @@ export function GuestForm({ guest, onSave, onClose }: Props) {
   const [familyName, setFamilyName] = useState(guest?.name ?? '')
   const [quantity,   setQuantity]   = useState(guest?.max_seats ?? 1)
   const [members,    setMembers]    = useState<Member[]>(() =>
-    Array.from({ length: guest?.max_seats ?? 1 }, () => ({ name: '', email: '' }))
+    Array.from({ length: guest?.max_seats ?? 1 }, () => ({ name: '' }))
   )
   const [error,   setError]   = useState<string | null>(null)
   const [saving,  setSaving]  = useState(false)
@@ -36,7 +35,7 @@ export function GuestForm({ guest, onSave, onClose }: Props) {
     if (!guest) return
     listGuestMembers(guest.id).then((existing) => {
       if (existing.length === 0) return
-      setMembers(existing.map((m) => ({ name: m.name, email: m.email ?? '' })))
+      setMembers(existing.map((m) => ({ name: m.name })))
       setQuantity(existing.length)
     })
   }, [guest])
@@ -46,17 +45,17 @@ export function GuestForm({ guest, onSave, onClose }: Props) {
     setQuantity(clamped)
     setMembers((prev) => {
       if (clamped > prev.length)
-        return [...prev, ...Array.from({ length: clamped - prev.length }, () => ({ name: '', email: '' }))]
+        return [...prev, ...Array.from({ length: clamped - prev.length }, () => ({ name: '' }))]
       return prev.slice(0, clamped)
     })
   }
 
-  function updateMember(i: number, field: 'name' | 'email', value: string) {
+  function updateMember(i: number, field: 'name', value: string) {
     setMembers((prev) => prev.map((m, idx) => idx === i ? { ...m, [field]: value } : m))
   }
 
   function membersPayload() {
-    return members.map((m) => ({ name: m.name.trim(), email: m.email.trim() || null }))
+    return members.map((m) => ({ name: m.name.trim(), email: null }))
   }
 
   async function handleSave() {
@@ -79,31 +78,34 @@ export function GuestForm({ guest, onSave, onClose }: Props) {
     }
   }
 
-  async function handleSendInvite() {
+  async function handleSaveAndWhatsApp() {
     if (!familyName.trim()) { setError('El nombre de familia es obligatorio.'); return }
     if (members.some((m) => !m.name.trim())) { setError('Todos los integrantes necesitan un nombre.'); return }
+
+    // Abrir la pestaña de forma síncrona (dentro del click) para evitar el bloqueo de popups;
+    // luego la redirigimos al link de WhatsApp una vez que tenemos el código del invitado.
+    const win = window.open('', '_blank')
 
     setSending(true)
     setError(null)
     try {
-      let guestId: string = guest?.id ?? ''
-      if (!guestId) {
-        console.log('[sendInvite] creating guest...')
-        guestId = await createGuestWithMembers({ familyName: familyName.trim(), members: membersPayload() })
-        console.log('[sendInvite] guest created:', guestId)
+      let code: string
+      if (!guest?.id) {
+        const created = await createGuestWithMembers({ familyName: familyName.trim(), members: membersPayload() })
+        code = created.code
       } else {
-        console.log('[sendInvite] updating guest:', guestId)
-        await updateGuestWithMembers(guestId, { familyName: familyName.trim(), members: membersPayload() })
+        await updateGuestWithMembers(guest.id, { familyName: familyName.trim(), members: membersPayload() })
+        code = guest.code
       }
-      console.log('[sendInvite] calling edge function...')
-      const result = await sendInviteEmail(guestId)
-      console.log('[sendInvite] result:', result)
+
+      const url = getWhatsAppShareUrl(buildInviteMessage(familyName.trim(), quantity, code))
+      if (win) win.location.href = url
+      else window.location.href = url
+
       onSave()
       onClose()
-      if (result.total === 0) alert('Guardado. Ningún integrante tiene email cargado.')
-      else alert(`Invitación enviada a ${result.sent} de ${result.total} destinatario${result.total > 1 ? 's' : ''}.`)
     } catch (err) {
-      console.error('[sendInvite] error:', err)
+      if (win) win.close()
       setError(err instanceof Error ? err.message : String(err))
       setSending(false)
     }
@@ -154,21 +156,12 @@ export function GuestForm({ guest, onSave, onClose }: Props) {
             <p className="admin-label" style={{ marginBottom: 0 }}>Integrantes</p>
             {members.map((m, i) => (
               <div key={i} className="flex gap-2 items-start">
-                <div style={{ flex: '1 1 45%' }}>
+                <div style={{ flex: '1 1 100%' }}>
                   <input
                     className="admin-input"
                     placeholder={`Nombre ${i + 1} *`}
                     value={m.name}
                     onChange={(e) => updateMember(i, 'name', e.target.value)}
-                  />
-                </div>
-                <div style={{ flex: '1 1 55%' }}>
-                  <input
-                    type="email"
-                    className="admin-input"
-                    placeholder="Email (opcional)"
-                    value={m.email}
-                    onChange={(e) => updateMember(i, 'email', e.target.value)}
                   />
                 </div>
               </div>
@@ -184,11 +177,11 @@ export function GuestForm({ guest, onSave, onClose }: Props) {
           <div className="flex gap-3 pt-2">
             <button
               type="button"
-              onClick={handleSendInvite}
+              onClick={handleSaveAndWhatsApp}
               disabled={saving || sending}
               className="admin-btn-primary disabled:opacity-40"
             >
-              {sending ? 'Enviando…' : 'Enviar invitación'}
+              {sending ? 'Abriendo WhatsApp…' : 'Guardar y enviar por WhatsApp'}
             </button>
             <button
               type="button"
