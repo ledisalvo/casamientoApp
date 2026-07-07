@@ -11,20 +11,20 @@ See: .paul/PROJECT.md (updated 2026-07-06)
 
 Milestone: v0.1 Initial Release
 Phase: 1 de TBD (Invitaciones por WhatsApp + RSVP público) — Planning
-Plan: 01-01 (RSVP público end-to-end) — APPLY en curso
-Status: APPLY — Tasks 1-3 aplicadas y commiteadas; bloqueado en checkpoint human-verify
-Last activity: 2026-07-06 — APPLY 01-01: migración 008, queries, RSVPSection en landing (commit 154d930)
+Plan: 01-01 (RSVP público end-to-end) — COMPLETO (loop cerrado)
+Status: Ready for next PLAN (01-02)
+Last activity: 2026-07-06 — UNIFY 01-01: SUMMARY creado, checkpoint aprobado por el usuario
 
 Progress:
-- Milestone: [░░░░░░░░░░] 0%
-- Fase 1: [██░░░░░░░░] ~25% (plan 01-01 en verificación)
+- Milestone: [█░░░░░░░░░] ~10%
+- Fase 1: [█████░░░░░] 50% (1 de 2 planes)
 
 ## Loop Position
 
 Current loop state:
 ```
 PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ◉        ○     [Applying — esperando verificación humana]
+  ✓        ✓        ✓     [Loop completo — listo para el plan 01-02]
 ```
 
 ## Notas de ejecución (APPLY 01-01)
@@ -60,9 +60,9 @@ PLAN ──▶ APPLY ──▶ UNIFY
 ## Session Continuity
 
 Last session: 2026-07-06
-Stopped at: Cambio de rumbo aplicado; plan 01-01 (RSVP público) creado
-Next action: Revisar y aprobar el plan, luego correr /paul:apply .paul/phases/01-invitaciones-whatsapp/01-01-PLAN.md
-Resume file: .paul/phases/01-invitaciones-whatsapp/01-01-PLAN.md
+Stopped at: Loop 01-01 cerrado (RSVP público en la landing, verificado y aprobado)
+Next action: /paul:plan del plan 01-02 (compartir por WhatsApp masivo + moderación en admin). Antes: reconciliar con la rama feature/whatsapp-invites-eclesiastes.
+Resume file: .paul/phases/01-invitaciones-whatsapp/01-01-SUMMARY.md
 
 ## Notas de contexto (WhatsApp feature)
 - El código de WhatsApp vive SIN COMMITEAR en el checkout principal, rama `feature/whatsapp-invites-eclesiastes`:

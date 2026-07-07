@@ -2,14 +2,14 @@
   "name": "casamiento-lucas",
   "version": "0.0.0",
   "milestone": {
-    "name": "None",
-    "version": "0.0.0",
-    "status": "not_started"
+    "name": "v0.1 Initial Release",
+    "version": "0.1.0",
+    "status": "in_progress"
   },
   "phase": {
-    "number": 0,
-    "name": "None",
-    "status": "not_started"
+    "number": 1,
+    "name": "Invitaciones por WhatsApp + RSVP público",
+    "status": "in_progress"
   },
   "loop": {
     "plan": null,
