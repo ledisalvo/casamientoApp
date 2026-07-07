@@ -7,7 +7,7 @@ A wedding invitation web app for Lucas' wedding: personalized guest invites with
 ## Current Milestone
 
 **v0.1 Initial Release** (v0.1.0)
-Status: Not started
+Status: In progress
 Phases: 0 of TBD complete
 
 ## Phases
@@ -20,11 +20,26 @@ Phases execute in numeric order: 1 → 2 → 2.1 → 2.2 → 3 → 3.1 → 4
 
 | Phase | Name | Plans | Status | Completed |
 |-------|------|-------|--------|-----------|
-| 1 | TBD | TBD | Not started | - |
+| 1 | UX flujo de invitación | 1 | Planning | - |
 
 ## Phase Details
 
-Phases will be defined during `/paul:plan`.
+### Phase 1: UX flujo de invitación
+
+**Goal:** Pulir la experiencia de UX/diseño del flujo de invitación del invitado (`/invite/:code`) en móvil, sin cambiar la lógica de negocio.
+**Depends on:** Nothing (primera fase)
+**Research:** Unlikely (patrones internos de UI, sin nuevas dependencias)
+
+**Scope:**
+- Loader de marca y transiciones suaves de entrada entre estados
+- Stepper de asistentes touch-friendly (reemplaza input number)
+- Foco visible y toggle "¿Asistís?" accesible por teclado
+- Respeto de `prefers-reduced-motion`
+
+**Plans:**
+- [ ] 01-01: Pulido UX del flujo de invitación del invitado
+
+_Fases siguientes se definirán en próximos `/paul:plan` (ej. fix de datos hardcodeados, UX de landing, UX de admin)._
 
 ---
 *Roadmap created: 2026-07-06*
