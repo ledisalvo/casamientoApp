@@ -11,20 +11,20 @@ See: .paul/PROJECT.md (updated 2026-07-06)
 
 Milestone: v0.1 Initial Release
 Phase: 1 de TBD (Invitaciones por WhatsApp + RSVP público) — Planning
-Plan: 01-01 (RSVP público end-to-end) — COMPLETO (loop cerrado)
-Status: Ready for next PLAN (01-02)
-Last activity: 2026-07-06 — UNIFY 01-01: SUMMARY creado, checkpoint aprobado por el usuario
+Plan: 01-02 (WhatsApp masivo + moderación) — PLAN creado, NO ejecutado (esperando reconciliación de rama + aprobación)
+Status: 01-01 completo; 01-02 planificado, bloqueado por reconciliación de la rama WhatsApp
+Last activity: 2026-07-06 — Creado .paul/phases/01-invitaciones-whatsapp/01-02-PLAN.md (solo planificación)
 
 Progress:
 - Milestone: [█░░░░░░░░░] ~10%
-- Fase 1: [█████░░░░░] 50% (1 de 2 planes)
+- Fase 1: [█████░░░░░] 50% (1 de 2 planes; 01-02 planificado)
 
 ## Loop Position
 
 Current loop state:
 ```
-PLAN ──▶ APPLY ──▶ UNIFY
-  ✓        ✓        ✓     [Loop completo — listo para el plan 01-02]
+Plan 01-01:  PLAN ✓ ──▶ APPLY ✓ ──▶ UNIFY ✓   [cerrado]
+Plan 01-02:  PLAN ✓ ──▶ APPLY ○ ──▶ UNIFY ○   [planificado, sin ejecutar]
 ```
 
 ## Notas de ejecución (APPLY 01-01)
@@ -60,9 +60,9 @@ PLAN ──▶ APPLY ──▶ UNIFY
 ## Session Continuity
 
 Last session: 2026-07-06
-Stopped at: Loop 01-01 cerrado (RSVP público en la landing, verificado y aprobado)
-Next action: /paul:plan del plan 01-02 (compartir por WhatsApp masivo + moderación en admin). Antes: reconciliar con la rama feature/whatsapp-invites-eclesiastes.
-Resume file: .paul/phases/01-invitaciones-whatsapp/01-01-SUMMARY.md
+Stopped at: PLAN 01-02 creado (no ejecutado). Loop 01-01 cerrado.
+Next action: 1) Reconciliar la rama feature/whatsapp-invites-eclesiastes con la base de PAUL. 2) Aprobar y correr /paul:apply .paul/phases/01-invitaciones-whatsapp/01-02-PLAN.md
+Resume file: .paul/phases/01-invitaciones-whatsapp/01-02-PLAN.md
 
 ## Notas de contexto (WhatsApp feature)
 - El código de WhatsApp vive SIN COMMITEAR en el checkout principal, rama `feature/whatsapp-invites-eclesiastes`:
