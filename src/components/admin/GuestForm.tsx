@@ -5,7 +5,6 @@ import {
   updateGuestWithMembers,
   listGuestMembers,
 } from '@/lib/queries'
-import { buildInviteMessage, getWhatsAppShareUrl } from '@/lib/whatsapp'
 import type { GuestWithRSVP } from '@/types'
 
 interface Member {
@@ -28,7 +27,6 @@ export function GuestForm({ guest, onSave, onClose }: Props) {
   )
   const [error,   setError]   = useState<string | null>(null)
   const [saving,  setSaving]  = useState(false)
-  const [sending, setSending] = useState(false)
 
   // Load existing members when editing
   useEffect(() => {
@@ -75,39 +73,6 @@ export function GuestForm({ guest, onSave, onClose }: Props) {
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error desconocido')
       setSaving(false)
-    }
-  }
-
-  async function handleSaveAndWhatsApp() {
-    if (!familyName.trim()) { setError('El nombre de familia es obligatorio.'); return }
-    if (members.some((m) => !m.name.trim())) { setError('Todos los integrantes necesitan un nombre.'); return }
-
-    // Abrir la pestaña de forma síncrona (dentro del click) para evitar el bloqueo de popups;
-    // luego la redirigimos al link de WhatsApp una vez que tenemos el código del invitado.
-    const win = window.open('', '_blank')
-
-    setSending(true)
-    setError(null)
-    try {
-      let code: string
-      if (!guest?.id) {
-        const created = await createGuestWithMembers({ familyName: familyName.trim(), members: membersPayload() })
-        code = created.code
-      } else {
-        await updateGuestWithMembers(guest.id, { familyName: familyName.trim(), members: membersPayload() })
-        code = guest.code
-      }
-
-      const url = getWhatsAppShareUrl(buildInviteMessage(familyName.trim(), quantity, code))
-      if (win) win.location.href = url
-      else window.location.href = url
-
-      onSave()
-      onClose()
-    } catch (err) {
-      if (win) win.close()
-      setError(err instanceof Error ? err.message : String(err))
-      setSending(false)
     }
   }
 
@@ -177,19 +142,11 @@ export function GuestForm({ guest, onSave, onClose }: Props) {
           <div className="flex gap-3 pt-2">
             <button
               type="button"
-              onClick={handleSaveAndWhatsApp}
-              disabled={saving || sending}
+              onClick={handleSave}
+              disabled={saving}
               className="admin-btn-primary disabled:opacity-40"
             >
-              {sending ? 'Abriendo WhatsApp…' : 'Guardar y enviar por WhatsApp'}
-            </button>
-            <button
-              type="button"
-              onClick={handleSave}
-              disabled={saving || sending}
-              className="admin-btn-ghost disabled:opacity-40"
-            >
-              {saving ? 'Guardando…' : 'Solo guardar'}
+              {saving ? 'Guardando…' : 'Guardar'}
             </button>
             <button type="button" onClick={onClose} className="admin-btn-ghost">
               Cancelar
