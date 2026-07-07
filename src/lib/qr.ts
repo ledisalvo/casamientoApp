@@ -8,6 +8,14 @@ export function getInviteUrl(code: string): string {
   return `/invite/${code}`
 }
 
+/** URL absoluta de la landing pública (link genérico para el envío masivo). */
+export function getLandingUrl(): string {
+  const domain = import.meta.env.VITE_PUBLIC_DOMAIN
+  if (domain && domain !== 'undefined') return domain
+  // Fallback para dev — usa el origin actual
+  return typeof window !== 'undefined' ? window.location.origin : ''
+}
+
 export async function downloadQR(code: string): Promise<void> {
   const url = getInviteUrl(code)
 
