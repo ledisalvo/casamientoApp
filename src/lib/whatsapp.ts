@@ -20,14 +20,15 @@ export function buildGenericInviteMessage(): string {
   ].join('\n')
 }
 
-export type ShareResult = 'shared' | 'copied' | 'whatsapp' | 'cancelled'
+export type ShareResult = 'shared' | 'whatsapp' | 'cancelled'
 
 /**
- * Comparte la invitación genérica. En móvil usa la Web Share API: abre la hoja
- * de compartir del sistema y, al elegir WhatsApp, se pueden seleccionar VARIOS
- * contactos y enviarles el mismo mensaje de una sola vez.
- * Fallback (desktop / sin Web Share): copia el mensaje al portapapeles, o abre
- * wa.me si tampoco hay portapapeles disponible.
+ * Comparte la invitación genérica abriendo WhatsApp.
+ * - Móvil (Web Share API): abre la hoja de compartir del sistema y, al elegir
+ *   WhatsApp, se pueden seleccionar VARIOS contactos y enviarles el mismo
+ *   mensaje de una sola vez.
+ * - Desktop / sin Web Share: abre WhatsApp (wa.me) con el mensaje ya escrito;
+ *   el usuario elige el contacto ahí. NO se copia al portapapeles.
  */
 export async function shareInvite(): Promise<ShareResult> {
   const message = buildGenericInviteMessage()
@@ -39,17 +40,8 @@ export async function shareInvite(): Promise<ShareResult> {
     } catch (err) {
       // El usuario cerró la hoja de compartir sin elegir destino
       if (err instanceof DOMException && err.name === 'AbortError') return 'cancelled'
-      // Cualquier otro error → caemos al fallback
+      // Cualquier otro error → caemos al fallback de WhatsApp
     }
-  }
-
-  try {
-    if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
-      await navigator.clipboard.writeText(message)
-      return 'copied'
-    }
-  } catch {
-    // sin portapapeles → último fallback
   }
 
   window.open(getWhatsAppShareUrl(message), '_blank')

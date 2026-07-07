@@ -39,7 +39,6 @@ export function AdminDashboardPage() {
   async function handleShareInvite() {
     const result = await shareInvite()
     const msg =
-      result === 'copied'   ? 'Mensaje de invitación copiado al portapapeles' :
       result === 'whatsapp' ? 'Abriendo WhatsApp…' :
       result === 'shared'   ? 'Invitación compartida' : null
     if (!msg) return // cancelado
